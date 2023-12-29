@@ -1,0 +1,48 @@
+.quote__navigation {
+  width: 60%;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.quote__search {
+  border: 2px solid #000 !important;
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: #000;
+}
+
+.allquotes__container {
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+.allquotes__card {
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: #fff;
+}
+
+.allquotes__content {
+  color: #000;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+}
+
+.allquotes__count {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.pagination {
+  margin-top: 30px;
+  text-align: center;
+}
