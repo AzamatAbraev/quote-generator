@@ -15,6 +15,14 @@ body, button {
   font-family: 'IBM Plex Mono', monospace;
 }
 
+section {
+  padding-top: 80px;
+}
+
+input:focus, select:focus {
+  outline: none;
+}
+
 button, a {
   cursor: pointer;
 }

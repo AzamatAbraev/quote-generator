@@ -23,11 +23,13 @@ const QuotePage = () => {
   const handleTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPage(1)
     setTags(e.target.value)
+    setSearch("")
   }
 
   const handleAuthors = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPage(1)
     setAuthor(e.target.value)
+    setSearch("")
   }
 
   useEffect(() => {
@@ -47,7 +49,6 @@ const QuotePage = () => {
   }, [])
 
   useEffect(() => {
-
     if (search == "") {
       getAllQuotes(page, tags, author)
     } else {
@@ -55,31 +56,45 @@ const QuotePage = () => {
     }
   }, [getAllQuotes, page, tags, author, search, searchAllQuotes])
 
+  console.log(allquotes);
+
+
   return (
-    <section id="quotes">
+    <section id="quotes" className="allquotes">
       <div className="container allquotes__container">
+        <div className="allquotes__header">
+        </div>
         <div className="allquotes__filter">
+          <h1 className="allquotes__title">Quotes</h1>
           <input placeholder="searching..." type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
-          <select value={tags} onChange={handleTags} name="tags" id="tags">
-            <option value="">Categories</option>
-            {allTags?.map((tag: TagType) => tag?.quoteCount > 0 ? <option key={tag?._id} value={tag?.name}>{tag?.name}</option> : null)}
-          </select>
-          <select value={author} onChange={handleAuthors} name="tags" id="tags">
-            <option value="">Authors</option>
-            {allAuthors?.map((author: AuthorType) => author?.quoteCount > 0 ? <option key={author?._id} value={author?.name}>{author?.name}</option> : null)}
-          </select>
+          <div className="allquotes__select">
+            <select value={tags} onChange={handleTags} name="tags" id="tags">
+              <option value="" selected>Categories</option>
+              {allTags?.map((tag: TagType) => tag?.quoteCount > 0 ? <option key={tag?._id} value={tag?.name}>{tag?.name}</option> : null)}
+            </select>
+            <select value={author} onChange={handleAuthors} name="tags" id="tags">
+              <option value="" selected>Authors</option>
+              {allAuthors?.map((author: AuthorType) => author?.quoteCount > 0 ? <option key={author?._id} value={author?.name}>{author?.name}</option> : null)}
+            </select>
+          </div>
         </div>
         <p className="allquotes__count">A total of {search.length != 0 ? searchTotal : total} quotes found</p>
         <div className="allquotes__row">
           {search.length == 0 ? allquotes?.map(data => <div key={data?._id} className="allquotes__card">
+            <div className="allquotes__tags">
+              {data?.tags.map(tag => <p className="allquotes__tag">&#35;{tag}</p>)}
+            </div>
             <p className="allquotes__content">{data?.content}</p>
-            <i>-{data?.author}</i>
+            <p className="allquotes__author">-{data?.author}</p>
           </div>) : searchQuotes?.map((data) => <div key={data?._id} className="allquotes__card">
+            <div className="allquotes__tags">
+              {data?.tags.map(tag => <p className="allquotes__tag">&#35;{tag}</p>)}
+            </div>
             <p className="allquotes__content">{data?.content}</p>
             <i>-{data?.author}</i>
           </div>)}
         </div>
-        {total > 20 ? <div className="pagination">
+        {total > 20 || searchTotal > 20 ? <div className="pagination">
           <Pagination current={page} pageSize={20} onChange={handlePagination} total={search.length != 0 ? searchTotal : total} />
         </div> : null}
       </div>

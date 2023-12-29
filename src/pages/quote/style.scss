@@ -42,6 +42,44 @@
   margin-bottom: 20px;
 }
 
+.allquotes__filter {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-content: center;
+
+  input {
+    padding: 10px;
+    font-size: 16px;
+  }
+}
+
+.allquotes__title {
+  font-size: 30px;
+}
+
+.allquotes__select {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  select {
+    padding: 10px;
+    font-size: 16px;
+  }
+}
+
+.allquotes__tags {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+
+.allquotes__tag {
+  color: blue;
+}
+
 .pagination {
   margin-top: 30px;
   text-align: center;
