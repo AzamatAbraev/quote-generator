@@ -25,10 +25,17 @@ const useAllQuotes = create<AllQuotesType>((set) => ({
         tags,
         author,
       };
-      set({ loading: true });
+      // set({ loading: true });
+      set((state) => ({ ...state, loading: true }));
+
       const { data } = await request("quotes", { params });
-      set({ total: data?.totalCount });
-      set({ allquotes: data?.results });
+      set((state) => ({
+        ...state,
+        total: data?.totalCount,
+        allquotes: data?.results,
+      }));
+      // set({ total: data?.totalCount });
+      // set({ allquotes: data?.results });
     } finally {
       set({ loading: false });
     }
@@ -36,11 +43,16 @@ const useAllQuotes = create<AllQuotesType>((set) => ({
   searchAllQuotes: async (search) => {
     const params = {
       query: search,
-    }
-    const {data} = await request("search/quotes", {params})
-    set({searchQuotes: data?.results})
-    set({searchTotal: data?.totalCount});
-  }
+    };
+    const { data } = await request("search/quotes", { params });
+    // set({ searchQuotes: data?.results });
+    // set({ searchTotal: data?.totalCount });
+    set((state) => ({
+      ...state,
+      searchQuotes: data?.results,
+      searchTotal: data?.totalCount,
+    }));
+  },
 }));
 
 export default useAllQuotes;

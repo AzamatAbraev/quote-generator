@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import "./style.scss";
 import useAllQuotes from "../../store/allquotes";
 import { Pagination, PaginationProps } from "antd";
@@ -18,19 +18,21 @@ const QuotePage = () => {
 
   const handlePagination: PaginationProps["onChange"] = (page) => {
     setPage(page)
+    console.log("pagination working");
+    
   }
 
-  const handleTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTags = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     setPage(1)
     setTags(e.target.value)
     setSearch("")
-  }
+  }, [])
 
-  const handleAuthors = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleAuthors = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     setPage(1)
     setAuthor(e.target.value)
     setSearch("")
-  }
+  }, [])
 
   useEffect(() => {
     const getTags = async () => {
@@ -49,15 +51,20 @@ const QuotePage = () => {
   }, [])
 
   useEffect(() => {
-    if (search == "") {
-      getAllQuotes(page, tags, author)
-    } else {
-      searchAllQuotes(search)
+    let subscribed = true;
+    if (subscribed ) {
+      if (search == "") {
+        getAllQuotes(page, tags, author)
+      } else {
+        searchAllQuotes(search)
+      }
+    }
+    return () => {
+      subscribed = false
     }
   }, [getAllQuotes, page, tags, author, search, searchAllQuotes])
 
   console.log(allquotes);
-
 
   return (
     <section id="quotes" className="allquotes">
@@ -80,9 +87,9 @@ const QuotePage = () => {
         </div>
         <p className="allquotes__count">A total of {search.length != 0 ? searchTotal : total} quotes found</p>
         <div className="allquotes__row">
-          {search.length == 0 ? allquotes?.map(data => <div key={data?._id} className="allquotes__card">
+          {search.length == 0 ? allquotes?.map((data) => <div key={data?._id} className="allquotes__card">
             <div className="allquotes__tags">
-              {data?.tags.map(tag => <p className="allquotes__tag">&#35;{tag}</p>)}
+              {data?.tags.map((tag) => <p key={tag} className="allquotes__tag">&#35;{tag}</p>)}
             </div>
             <p className="allquotes__content">{data?.content}</p>
             <p className="allquotes__author">-{data?.author}</p>
