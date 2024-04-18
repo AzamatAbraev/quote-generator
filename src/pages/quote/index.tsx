@@ -18,8 +18,6 @@ const QuotePage = () => {
 
   const handlePagination: PaginationProps["onChange"] = (page) => {
     setPage(page)
-    console.log("pagination working");
-    
   }
 
   const handleTags = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -64,7 +62,6 @@ const QuotePage = () => {
     }
   }, [getAllQuotes, page, tags, author, search, searchAllQuotes])
 
-  console.log(allquotes);
 
   return (
     <section id="quotes" className="allquotes">
